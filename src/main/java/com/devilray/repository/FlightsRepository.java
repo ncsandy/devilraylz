@@ -29,6 +29,9 @@ public interface FlightsRepository extends JpaRepository <Flights, Long> {
     @Query("SELECT SUM(m.hood) FROM Flights m WHERE m.accounts=?1")
     double hoodtotals(Accounts account);
 
+    @Query("SELECT SUM(m.sim) FROM Flights m WHERE m.accounts=?1")
+    double simtotals(Accounts account);
+
 
     List<Flights> findByAccountsOrderByDateofflightAsc(Accounts account);
 
@@ -49,6 +52,8 @@ public interface FlightsRepository extends JpaRepository <Flights, Long> {
     @Query(value="Select * FROM devilraylz.flight_time f where f.flights_id=?1 and f.dateofflight between ?2 and ?3 ;",nativeQuery = true)
     public List<Flights> minimums(long id, LocalDate start, LocalDate end);
 
+    @Query(value="SELECT * FROM devilraylz.flight_time;", nativeQuery = true)
+    public List<Flights> allFlights();
 
 
     }

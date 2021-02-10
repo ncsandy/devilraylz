@@ -164,10 +164,10 @@
                                             Checklist
                                         </th>
                                         <th>
-                                            Regulations
+                                            Standard Operating Procedures
                                         </th>
                                         <th >
-                                            Standard Operating Procedures
+                                            Regulations
                                         </th>
                                     </tr>
                                     </thead>

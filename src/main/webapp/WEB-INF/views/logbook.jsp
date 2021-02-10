@@ -176,6 +176,9 @@
                                         <th>
                                             HOOD
                                         </th>
+                                        <th>
+                                            SIM
+                                        </th>
                                         <th class="text-center">
                                             DATE
                                         </th>
@@ -203,6 +206,9 @@
                                         <td>
                                                 ${flight.hood}
                                         </td>
+                                        <td>
+                                            <p>${flight.sim}</p>
+                                        </td>
                                         <td class="text-center">
                                                 ${flight.dateofflight}
                                         </td>
@@ -213,25 +219,6 @@
                                     </tr>
                                     </c:forEach>
                                     </tbody>
-
-                                    <tr>
-
-                                        <td>
-                                            Total
-                                        </td>
-                                        <td>
-                                            Total
-                                        </td>
-                                        <td>
-                                            Total
-                                        </td>
-                                        <td>
-                                            Total
-                                        </td>
-                                        <td>
-                                            Total
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td>
                                             ${daytotal}
@@ -247,6 +234,17 @@
                                         </td>
                                         <td>
                                                 ${hoodtotal}
+                                        </td>
+                                        <td class="">
+                                                ${simtotals}
+                                        </td>
+                                        <td class="text-center">
+                                            Total hours: ${totalhours}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-color: #ffffff00 ">
+                                            <p>Totals</p>
                                         </td>
                                     </tr>
                                 </table>
@@ -291,6 +289,19 @@
                                                         </label>
 
                         </th>
+
+
+                        <th>
+                            <label>SIM</label>
+                            <label>
+                                <form:input  type="text" class="form-control only-numeric" style="width: 65px;"  path="sim" id="numb"  />
+                            </label>
+
+                        </th>
+
+
+
+
                        <th>
                         <label>
                             <label>Date</label>

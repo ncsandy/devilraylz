@@ -30,6 +30,9 @@ public interface AccountsRepository extends JpaRepository <Accounts, Long> {
             "a.fName LIKE (CONCAT('%',:name, '%')) OR a.lName =:name")
     List<Accounts> customeseachUser(@Param("name") String name, @Param("email") String email);
 
+    @Query(value="SELECT * FROM devilraylz.pilot;",nativeQuery = true)
+    List<Accounts> allpilots();
+
     @Query(kewordSearch)
     Page<Accounts> customeseacher(@Param("keyword") String keyword, Pageable pageable);
 

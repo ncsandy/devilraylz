@@ -46,22 +46,31 @@ public class MinimumsUtil {
     public static void minimums (LocalDate period1start) {
 
 
+
+        System.out.println(period1start);
         int thisyear = LocalDate.now().getYear();
 
         LocalDate today = LocalDate.now();
 
+        int birthday =  period1start.getMonthValue();
+        int monthsBetween = today.getMonthValue() - birthday;
+
         period1start = period1start.withYear(thisyear);
+        period1start = period1start.plusMonths(1);
+
 
         period1start = period1start.withDayOfMonth(1);
 
+        if(period1start.getYear() > thisyear){
+            period1start = period1start.withYear(thisyear);
+        }
 
-        long monthsBetween = MONTHS.between(today,period1start);
 
         System.out.println(monthsBetween);
 
 
 
-        LocalDate period1end = period1start.plusMonths(6);
+        LocalDate period1end = period1start.plusMonths(5);
 
 
         period1end = period1end.withDayOfMonth(period1end.lengthOfMonth());
@@ -75,26 +84,36 @@ public class MinimumsUtil {
 
         System.out.println(monthdiff + " " + yeardiff );
 
+        if(period1start.isAfter(today)  || period2start.isAfter(today)){
+            if(monthsBetween == 0){
+                currentPeriodStart = period2start.minusYears(1);
+                currentPeriodEnd = period2end.minusYears(1);
+            }
+            else if(monthsBetween < 0){
+                if(monthdiff > 6){
+                    currentPeriodStart = period1start.minusYears(1);
+                    currentPeriodEnd = period1end.minusYears(1);
+                }
+                else {
+                    if(monthdiff < 0){
+                        currentPeriodStart = period1start;
+                        currentPeriodEnd = period1end;
+                    }
+                    else{
+                        currentPeriodStart = period2start.minusYears(1);
+                        currentPeriodEnd = period2end.minusYears(1);
+                    }
+                }
+            }
+            else{
+
+                currentPeriodStart = period1start;
+                currentPeriodEnd = period1end;
+            }
+
+        }
 
 
-        if(monthdiff == 5){
-            currentPeriodStart = period2start.withYear(thisyear);
-            currentPeriodEnd = period2end.withYear(thisyear);
-        }
-        else if(monthdiff >= 5){
-            currentPeriodStart = period1start.withYear(thisyear-1);
-            currentPeriodEnd = period1end.withYear(thisyear);
-        }
-        else if(monthdiff >= 1){
-            currentPeriodStart = period2start.withYear(thisyear-1);
-            currentPeriodEnd = period2end.withYear(thisyear);
-
-        }
-
-        else if(monthdiff == 0){
-            currentPeriodStart = period1start;
-            currentPeriodEnd = period1end;
-        }
 
 
 

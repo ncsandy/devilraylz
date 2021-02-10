@@ -34,8 +34,12 @@ public class Flights {
     @Column(nullable = false)
     @NumberFormat
     private double weather;
+    @Column(nullable = false)
+    @NumberFormat
+    private double sim;
     // @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate dateofflight;
+
 
     @ManyToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="flights_id")
@@ -102,6 +106,14 @@ public class Flights {
         return dateofflight;
     }
 
+    public double getSim() {
+        return sim;
+    }
+
+    public void setSim(double sim) {
+        this.sim = sim;
+    }
+
     public void setDateofflight(LocalDate dateofflight) {
         this.dateofflight = dateofflight;
     }
@@ -109,6 +121,7 @@ public class Flights {
     public void setAccounts(Accounts accounts) {
         this.accounts = accounts;
     }
+
 
     @Override
     public String toString() {

@@ -179,6 +179,10 @@
                                     <p class="blockquote blockquote-primary">
                                         Last NVG Flight: ${lastnvgdate}
                                         <br>
+                                        <br>
+                                        <br>
+                                        Your uncurrent NVG date is: ${nvguncurrent}
+                                        <br>
                                         <span style="color:red">${nonvg}</span>
                                         <br>
                                        <span style="color:green">${current}</span>

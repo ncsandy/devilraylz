@@ -193,12 +193,17 @@ public class AppController {
 
         if(flightsList.size() > 0) {
 
+            double totalhours = flightsRepository.daytotals(a)+ flightsRepository.nvgtotals(a) + flightsRepository.nighttotals(a)+
+                    flightsRepository.weathertotals(a) + flightsRepository.hoodtotals(a) + flightsRepository.simtotals(a);
+            String thours = df.format(totalhours);
 
             model.addAttribute("daytotal", df.format(flightsRepository.daytotals(a)));
             model.addAttribute("nvgtotal", df.format(flightsRepository.nvgtotals(a)));
             model.addAttribute("nighttotal", df.format(flightsRepository.nighttotals(a)));
             model.addAttribute("weathertotal", df.format(flightsRepository.weathertotals(a)));
             model.addAttribute("hoodtotal", df.format(flightsRepository.hoodtotals(a)));
+            model.addAttribute("simtotals",df.format(flightsRepository.simtotals(a)));
+            model.addAttribute("totalhours", thours);
         }
 
         return "logbook";
@@ -326,7 +331,9 @@ public class AppController {
         if(lastNvgFlight == null){
             model.addAttribute("nonvg","We don't have an NVG flight on file for you");
         }else {
+            LocalDate uncurrentNvg = lastNvgFlight.getDateofflight().plusDays(60);
             model.addAttribute("lastnvgdate", lastNvgFlight.getDateofflight());
+            model.addAttribute("nvguncurrent",uncurrentNvg);
         }
 
 
@@ -385,6 +392,8 @@ public class AppController {
 
         double semiannualhours = 0;
         int totalflights = 0;
+        DecimalFormat df = new DecimalFormat("#.#");
+
 
         for(Flights flight : semiannualperiod){
               semiannualhours += flight.getDay();
@@ -392,19 +401,19 @@ public class AppController {
               semiannualhours += flight.getNight();
               semiannualhours += flight.getHood();
               semiannualhours += flight.getWeather();
+
               if(flight.getDay() > 0.0 || flight.getNvg() > 0.0 || flight.getNight() > 0.0 || flight.getHood() > 0.0 || flight.getWeather() > 0.0){
                   totalflights++;
               }
         }
 
+        String thours = df.format(semiannualhours);
 
-        System.out.println(semiannualhours);
-        System.out.println(totalflights);
 
         model.addAttribute("birthmonth",birthmonth);
         model.addAttribute("currentstart",minimumsUtil.getCurrentPeriodStart());
         model.addAttribute("currentend",minimumsUtil.getCurrentPeriodEnd());
-        model.addAttribute("semiannualhours",semiannualhours);
+        model.addAttribute("semiannualhours",thours);
         model.addAttribute("totalflights", totalflights);
 
 
