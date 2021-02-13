@@ -119,23 +119,17 @@ public class AppController {
 
         List<Flights> validFlights = flightsRepository.nvgvalidhours(a.getId());
 
-        //intializing total
-        double total = 0;
-
-        //looping through to get hours in the past 60 days
-        for(Flights f : validFlights){
-            total += f.getNvg();
-        }
 
         List<Flights> flightList = flightsRepository.findByAccountsOrderByDateofflightAsc(a);
 
+        long days = 0;
+        long nDays = 0;
+
         //getting the last flight flown
         Flights lastFlight = null;
-        LocalDate uncurrentflight = null;
-
+        Flights lastNvgFlight = null;
 
         //looping through looking for valid flight
-
         for(int i = flightList.size()-1; i>=0; i--){
             if(flightList.get(i).getNvg() > 0.0 || flightList.get(i).getDay() > 0.0 ||
                     flightList.get(i).getWeather() > 0.0 || flightList.get(i).getHood() > 0.0 ||
@@ -144,25 +138,35 @@ public class AppController {
                 break;
             }
         }
+        //looping through to find our valid nvg flight
+        for(int i = flightList.size()-1; i>=0; i--){
+            if(flightList.get(i).getNvg() > 0.0){
+                lastNvgFlight = flightList.get(i);
+                break;
+            }
+        }
+       //doing a null check here, if it doesn't exist
+        if(lastNvgFlight == null){
+            model.addAttribute("current",false);
+        }
+        //if its not null!
+        if(lastNvgFlight != null) {
+            nDays = ChronoUnit.DAYS.between(lastNvgFlight.getDateofflight(), today);
+            if(nDays >= 60){
+                model.addAttribute("current" ,false);
+            }
+        }
 
+        //doing a null check here
         if(lastFlight == null){
             model.addAttribute("current",false);
-        }else {
-            uncurrentflight = lastFlight.getDateofflight().plusDays(60);
         }
-
-        long days = 0;
-
-        //getting current date and uncurrent date value to put in progress bar..
-
-        if (uncurrentflight != null) {
-            LocalDate currentDate = LocalDate.now();
-            //variable for progress bar
-            days = ChronoUnit.DAYS.between(currentDate, uncurrentflight);
-        }
-
-        if(total >= 1.0 || days >= 1){
-            model.addAttribute("current",true);
+        //if not null then add the attribute
+        if(lastFlight != null) {
+            days = ChronoUnit.DAYS.between(lastFlight.getDateofflight(), today);
+            if(days >= 60){
+                model.addAttribute("current" ,false);
+            }
         }
 
 
