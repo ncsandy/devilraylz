@@ -10,5 +10,5 @@ Devilray LZ is a currency tracker for Army aviators. The aviator is able to crea
 # Todo
 
 -Add flight scheduling
--CSV or Excel file upload reading
+<p>-CSV or Excel file upload reading</p>
 
