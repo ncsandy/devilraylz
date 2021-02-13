@@ -1,5 +1,8 @@
 package com.devilray.model;
 
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -18,6 +21,8 @@ public class Accounts {
     private String lName;
     private String password;
     private LocalDate pBirthday;
+    @Column(nullable = false)
+    private boolean notified;
     @Transient
     private String password2;
     private String email;
@@ -120,5 +125,13 @@ public class Accounts {
 
     public void setpBirthday(LocalDate pBirthday) {
         this.pBirthday = pBirthday;
+    }
+
+    public boolean getNotified() {
+        return notified;
+    }
+
+    public void setNotified(boolean notified) {
+        this.notified = notified;
     }
 }
